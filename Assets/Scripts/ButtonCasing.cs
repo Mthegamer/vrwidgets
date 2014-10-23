@@ -24,14 +24,16 @@ namespace VRWidgets
 
     void Update()
     {
+      // Constraint the position along the constraint_direction_
       transform.position = Vector3.Project(transform.position - button_.transform.position, constraint_direction_) + button_.transform.position;
+
+      // If the button is going backwards, place it back to original spot
       if (transform.localPosition.z < 0.0f)
       {
         Vector3 local_position = transform.localPosition;
         local_position.z = 0.0f;
         transform.localPosition = local_position;
-      }
-        
+      } 
     }
   }
 }

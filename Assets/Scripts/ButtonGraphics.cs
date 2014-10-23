@@ -29,6 +29,7 @@ namespace VRWidgets
       if (button_ == null)
         return;
 
+      // Check limits of the positions the button is allowed to go to
       transform.localPosition = button_.buttonCasing.transform.localPosition;
       if (transform.localPosition.z > position_end_limit_.z)
       {
