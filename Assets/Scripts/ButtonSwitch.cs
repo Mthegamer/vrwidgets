@@ -5,16 +5,16 @@ namespace VRWidgets
 {
   public class ButtonSwitch : MonoBehaviour
   {
-    private Button button = null;
+    private Button button_ = null;
 
     void OnTriggerEnter(Collider collider)
     {
-      if (button == null)
+      if (button_ == null)
         return;
 
-      if (collider.gameObject == button.buttonCasing.gameObject)
+      if (collider.gameObject == button_.buttonCasing.gameObject)
       {
-        button.ButtonPressed();
+        button_.ButtonPressed();
       }
     }
 
@@ -22,7 +22,7 @@ namespace VRWidgets
     {
       if (transform.parent && transform.parent.GetComponent<Button>())
       {
-        button = transform.parent.GetComponent<Button>();
+        button_ = transform.parent.GetComponent<Button>();
       }
       else
       {
