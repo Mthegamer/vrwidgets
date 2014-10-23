@@ -19,6 +19,7 @@ namespace VRWidgets
       {
         Debug.LogWarning("Button Switch configured incorrectedly");
       }
+      GetComponent<SpringJoint>().connectedAnchor = transform.position;
       constraint_direction_ = (slider_.lowerLimit.transform.position - slider_.upperLimit.transform.position).normalized;
     }
 
@@ -26,6 +27,18 @@ namespace VRWidgets
     void Update()
     {
       // Constraint the position along the constraint_direction_
+      transform.position = Vector3.Project(transform.position - slider_.transform.position, constraint_direction_) + slider_.transform.position;
+
+      // If the button is going backwards, place it back to original spot
+      if (transform.localPosition.x < slider_.upperLimit.transform.localPosition.x && transform.localPosition.x > slider_.lowerLimit.transform.localPosition.x)
+      {
+        GetComponent<SpringJoint>().spring = 0.0f;
+        GetComponent<SpringJoint>().connectedAnchor = transform.position;
+      }
+      else
+      {
+        GetComponent<SpringJoint>().spring = 100.0f;
+      }
     }
   }
 }

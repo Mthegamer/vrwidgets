@@ -7,8 +7,8 @@ namespace VRWidgets
   {
     private Button button_ = null;
 
-    Vector3 position_start_limit_;
-    Vector3 position_end_limit_;
+    private Vector3 position_start_limit_;
+    private Vector3 position_end_limit_;
 
     void Start()
     {
