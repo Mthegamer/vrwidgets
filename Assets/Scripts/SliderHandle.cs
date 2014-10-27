@@ -24,7 +24,7 @@ namespace VRWidgets
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
       // Constraint the position along the constraint_direction_
       transform.position = Vector3.Project(transform.position - slider_.transform.position, constraint_direction_) + slider_.transform.position;

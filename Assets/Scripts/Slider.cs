@@ -25,7 +25,7 @@ namespace VRWidgets
         section.transform.parent = transform;
         section.transform.localPosition = position;
         section.transform.localRotation = Quaternion.identity;
-        section.transform.localScale = Vector3.one * section_size;
+        section.transform.localScale = new Vector3(section_size, 0.1f, 0.1f);
       }
       sliderSection.SetActive(false);
     }

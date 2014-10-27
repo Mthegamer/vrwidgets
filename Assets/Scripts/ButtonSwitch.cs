@@ -18,7 +18,7 @@ namespace VRWidgets
       }
     }
 
-    void Start()
+    void Awake()
     {
       if (transform.parent && transform.parent.GetComponent<Button>())
       {
@@ -28,6 +28,10 @@ namespace VRWidgets
       {
         Debug.LogWarning("Button Switch configured incorrectedly");
       }
+    }
+
+    void Start()
+    {
     }
   }
 }
