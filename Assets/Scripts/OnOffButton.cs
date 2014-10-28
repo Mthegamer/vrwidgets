@@ -23,7 +23,7 @@ public class OnOffButton : Button
     base.TurnsActive();
     buttonTopGraphics.SetStatus(true);
     buttonTopGraphics.SetBloomGain(1.5f);
-    buttonMidGraphics.SetBloomGain(1.5f);
+    buttonMidGraphics.SetBloomGain(10.0f);
     buttonBotGraphics.SetBloomGain(2.0f);
   }
 
