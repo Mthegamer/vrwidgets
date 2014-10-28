@@ -13,7 +13,6 @@ namespace VRWidgets
     {
       GetComponent<SpringJoint>().connectedAnchor = position;
       local_z_constraint_ = button_.transform.InverseTransformPoint(position).z;
-      Debug.Log(local_z_constraint_);
     }
 
     void Awake()
@@ -45,7 +44,7 @@ namespace VRWidgets
         Vector3 local_position = transform.localPosition;
         local_position.z = local_z_constraint_;
         transform.localPosition = local_position;
-      } 
+      }
     }
   }
 }

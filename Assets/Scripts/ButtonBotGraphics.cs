@@ -7,7 +7,7 @@ namespace VRWidgets
   {
     private Button button_ = null;
 
-    void Start()
+    void Awake()
     {
       if (transform.parent && transform.parent.GetComponent<Button>())
       {
@@ -29,7 +29,7 @@ namespace VRWidgets
       float buttonSwitchScaleZ = button_.buttonSwitch.transform.localScale.z;
 
       // Check limits of the positions the button is allowed to go to
-      transform.localPosition = new Vector3(0.0f, 0.0f, (buttonSwitchPosZ - buttonSwitchScaleZ / 2.0f - buttonCasingScaleZ));
+      transform.position = button_.transform.TransformPoint(new Vector3(0.0f, 0.0f, (buttonSwitchPosZ - buttonSwitchScaleZ / 2.0f - buttonCasingScaleZ)));
     }
   }
 }
