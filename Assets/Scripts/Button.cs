@@ -54,18 +54,14 @@ namespace VRWidgets
       exited_cushion_ = true;
     }
 
-    void Start()
-    {
-      TurnsInactive();
-    }
-
-    void Update()
+    public virtual void Update()
     {
       if (entered_switch_ && entered_cushion_)
       {
+
+        ButtonPressed();
         if (isToggleButton)
         {
-          ButtonPressed();
           if (isActive)
             TurnsInactive();
           else
