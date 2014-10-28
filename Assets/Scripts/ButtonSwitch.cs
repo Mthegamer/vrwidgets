@@ -7,7 +7,7 @@ namespace VRWidgets
   {
     private Button button_ = null;
 
-    void OnTriggerEnter(Collider collider)
+    void OnTriggerStay(Collider collider)
     {
       if (button_ == null)
         return;

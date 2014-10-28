@@ -20,18 +20,14 @@ namespace VRWidgets
 
     void Awake()
     {
-      if (transform.parent && transform.parent.GetComponent<Button>())
+      if (transform.parent && transform.parent && transform.parent.parent.GetComponent<Button>())
       {
-        button_ = transform.parent.GetComponent<Button>();
+        button_ = transform.parent.parent.GetComponent<Button>();
       }
       else
       {
         Debug.LogWarning("Button Switch configured incorrectedly");
       }
-    }
-
-    void Start()
-    {
     }
   }
 }

@@ -24,15 +24,6 @@ namespace VRWidgets
       }
     }
 
-    private bool isCasingPastSwitch()
-    {
-      float button_casing_pos_z = button_.buttonCasing.transform.localPosition.z;
-      float button_casing_scale_z = button_.buttonCasing.transform.localScale.z;
-      float button_switch_pos_z = button_.buttonSwitch.transform.localPosition.z;
-      float button_switch_scale_z = button_.buttonSwitch.transform.localScale.z;
-      return ((button_casing_pos_z + button_casing_scale_z / 2.0f) < (button_switch_pos_z - button_switch_scale_z / 2.0f));
-    }
-
     void Awake()
     {
       if (transform.parent && transform.parent.GetComponent<Button>())
@@ -50,21 +41,16 @@ namespace VRWidgets
       if (button_ == null)
         return;
 
-      float button_casing_pos_z = button_.buttonCasing.transform.localPosition.z;
-      float button_casing_scale_z = button_.buttonCasing.transform.localScale.z;
-      float button_switch_pos_z = button_.buttonSwitch.transform.localPosition.z;
-      float button_switch_scale_z = button_.buttonSwitch.transform.localScale.z;
-      Vector3 transformed_position = Vector3.zero;
-      // Check limits of the positions the button is allowed to go to
-      if (isCasingPastSwitch())
-      {
-        transformed_position += new Vector3(0.0f, 0.0f, button_casing_pos_z - button_casing_scale_z / 2.0f);
-      }
-      else
-      {
-        transformed_position += new Vector3(0.0f, 0.0f, (button_switch_pos_z - button_switch_scale_z / 2.0f - button_casing_scale_z));
-      }
-      transform.position = button_.transform.TransformPoint(transformed_position);
+      float casing_pos = button_.buttonCasing.transform.localPosition.z;
+      float casing_scale = button_.buttonCasing.transform.localScale.z;
+      float switch_pos = button_.buttonSwitch.transform.localPosition.z;
+      float switch_scale = button_.buttonSwitch.transform.localScale.z;
+
+      float graphics_position = casing_pos - casing_scale / 2.0f; // The position is relative to the casing
+      float graphics_position_limit = switch_pos - switch_scale / 2.0f - casing_scale; // The limit is relative to the switch
+
+      float position = Mathf.Min(graphics_position, graphics_position_limit);
+      transform.position = button_.transform.TransformPoint(new Vector3(0.0f, 0.0f, position));
     }
   }
 }
