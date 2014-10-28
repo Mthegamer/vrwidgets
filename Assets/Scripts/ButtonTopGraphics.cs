@@ -26,9 +26,9 @@ namespace VRWidgets
 
     void Awake()
     {
-      if (transform.parent && transform.parent.GetComponent<Button>())
+      if (transform.parent && transform.parent.GetComponentInChildren<Button>())
       {
-        button_ = transform.parent.GetComponent<Button>();
+        button_ = transform.parent.GetComponentInChildren<Button>();
       }
       else
       {

@@ -6,9 +6,14 @@ public class OnOffButton : Button
 {
   public ButtonTopGraphics buttonTopGraphics;
 
-  public override void ButtonAction()
+  public override void ButtonPressed()
   {
     Debug.Log("PRESSED");
+  }
+
+  public override void ButtonReleased()
+  {
+    Debug.Log("RELEASED");
   }
 
   public override void TurnsActive()

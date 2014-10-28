@@ -15,25 +15,23 @@ namespace VRWidgets
     public bool isToggleButton = false;
 
     protected bool isActive = false;
-    protected bool button_pressed_ = false;
 
-    public abstract void ButtonAction();
+    protected bool entered_switch_ = false;
+    protected bool entered_cushion_ = false;
+    protected bool exited_switch_ = false;
+    protected bool exited_cushion_ = false;
 
-    public virtual void ButtonPressed()
+    public abstract void ButtonReleased();
+    public abstract void ButtonPressed();
+
+    public virtual void ButtonEntersSwitch()
     {
-      if (!button_pressed_)
-      {
-        ButtonAction();
-        if (isToggleButton)
-        {
-          if (isActive)
-            TurnsInactive();
-          else
-            TurnsActive();
-          isActive = !isActive;
-        }
-      }
-      button_pressed_ = true;
+      entered_switch_ = true;
+    }
+
+    public virtual void ButtonExitsSwitch()
+    {
+      exited_switch_ = true;
     }
 
     public virtual void TurnsActive()
@@ -48,12 +46,42 @@ namespace VRWidgets
 
     public void ButtonEntersCushion()
     {
-      button_pressed_ = false;
+      entered_cushion_ = true;
+    }
+
+    public void ButtonExitsCushion()
+    {
+      exited_cushion_ = true;
     }
 
     void Start()
     {
       TurnsInactive();
+    }
+
+    void Update()
+    {
+      if (entered_switch_ && entered_cushion_)
+      {
+        if (isToggleButton)
+        {
+          ButtonPressed();
+          if (isActive)
+            TurnsInactive();
+          else
+            TurnsActive();
+          isActive = !isActive;
+        }
+        entered_switch_ = false;
+        entered_cushion_ = false;
+      }
+
+      if (exited_switch_ && exited_cushion_)
+      {
+        ButtonReleased();
+        exited_switch_ = false;
+        exited_cushion_ = false;
+      }
     }
   }
 }

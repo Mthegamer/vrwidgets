@@ -14,7 +14,18 @@ namespace VRWidgets
 
       if (collider.gameObject == button_.buttonCasing.gameObject)
       {
-        button_.ButtonEntersCushion(); 
+        button_.ButtonEntersCushion();
+      }
+    }
+
+    void OnTriggerExit(Collider collider)
+    {
+      if (button_ == null)
+        return;
+
+      if (collider.gameObject == button_.buttonCasing.gameObject)
+      {
+        button_.ButtonExitsCushion();
       }
     }
 

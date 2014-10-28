@@ -4,8 +4,13 @@ using VRWidgets;
 
 public class ButtonBasic : Button 
 {
-  public override void ButtonAction()
+  public override void ButtonPressed()
   {
-    Debug.Log("PRESSED"); 
+    Debug.Log("PRESSED");
+  }
+
+  public override void ButtonReleased()
+  {
+    Debug.Log("RELEASED");
   }
 }
