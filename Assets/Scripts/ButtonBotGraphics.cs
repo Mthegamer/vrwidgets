@@ -7,6 +7,15 @@ namespace VRWidgets
   {
     private Button button_ = null;
 
+    public void SetBloomGain(float gain)
+    {
+      Renderer[] renderers = GetComponentsInChildren<Renderer>();
+      foreach (Renderer renderer in renderers)
+      {
+        renderer.material.SetFloat("_Gain", gain);
+      }
+    }
+
     void Awake()
     {
       if (transform.parent && transform.parent.GetComponentInChildren<Button>())

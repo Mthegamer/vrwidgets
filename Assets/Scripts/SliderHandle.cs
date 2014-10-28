@@ -5,40 +5,34 @@ namespace VRWidgets
 {
   public class SliderHandle : MonoBehaviour
   {
-    private Slider slider_ = null;
-    private Vector3 constraint_direction_;
+    public GameObject upperLimit;
+    public GameObject lowerLimit;
+    private Vector3 constraint_direction_ = Vector3.right; // X-axis
+    private Vector3 origin_position_ = Vector3.zero;
 
-    // Use this for initialization
-    void Start()
+    public void SetReferencePosition()
     {
-      if (transform.parent && transform.parent.GetComponent<Slider>())
-      {
-        slider_ = transform.parent.GetComponent<Slider>();
-      }
-      else
-      {
-        Debug.LogWarning("Button Switch configured incorrectedly");
-      }
-      GetComponent<SpringJoint>().connectedAnchor = transform.position;
-      constraint_direction_ = (slider_.lowerLimit.transform.position - slider_.upperLimit.transform.position).normalized;
+      origin_position_ = transform.position;
     }
 
-    // Update is called once per frame
-    void LateUpdate()
+    public void UpdatePosition(Vector3 local_position_difference)
     {
-      // Constraint the position along the constraint_direction_
-      transform.position = Vector3.Project(transform.position - slider_.transform.position, constraint_direction_) + slider_.transform.position;
+      transform.position = Vector3.Project(local_position_difference, constraint_direction_) + origin_position_;
+      Vector3 sliderHandlePosition = transform.localPosition;
+      if (sliderHandlePosition.x < lowerLimit.transform.localPosition.x)
+        sliderHandlePosition.x = lowerLimit.transform.localPosition.x;
 
-      // If the button is going backwards, place it back to original spot
-      if (transform.localPosition.x < slider_.upperLimit.transform.localPosition.x && transform.localPosition.x > slider_.lowerLimit.transform.localPosition.x)
-      {
-        GetComponent<SpringJoint>().spring = 0.0f;
-        GetComponent<SpringJoint>().connectedAnchor = transform.position;
-      }
-      else
-      {
-        GetComponent<SpringJoint>().spring = 100.0f;
-      }
+      if (sliderHandlePosition.x > upperLimit.transform.localPosition.x)
+        sliderHandlePosition.x = upperLimit.transform.localPosition.x;
+
+      transform.localPosition = sliderHandlePosition;
+    }
+
+    // Use this for initialization
+    void Awake()
+    {
+      origin_position_ = transform.position;
+      constraint_direction_ = (upperLimit.transform.position - lowerLimit.transform.position) / 2.0f;
     }
   }
 }

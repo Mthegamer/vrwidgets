@@ -5,21 +5,21 @@ using VRWidgets;
 public class HandDetector : MonoBehaviour
 {
   [HideInInspector]
-  public GameObject target_ = null;
+  public GameObject target = null;
 
   public void ResetTarget()
   {
-    target_ = null;
+    target = null;
   }
 
   void OnTriggerEnter(Collider collider)
   {
-    if (target_ != null)
+    if (target != null)
       return;
 
     if (collider.transform.parent && collider.transform.parent.parent && collider.transform.parent.parent.GetComponent<HandModel>())
     {
-      target_ = collider.gameObject;
+      target = collider.gameObject;
     }
   }
 }

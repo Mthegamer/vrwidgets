@@ -5,41 +5,38 @@ namespace VRWidgets
 {
   public class Slider : MonoBehaviour
   {
-    public SliderLimit lowerLimit;
-    public SliderLimit upperLimit;
-    public SliderHandle sliderHandle;
-    public GameObject sliderSection;
-
-    public float length = 0;
-    public int sections = 0;
+    public GameObject sliderHandle = null;
+    public GameObject lowerLimit = null;
+    public GameObject upperLimit = null;
+    public GameObject inactiveBar = null;
+    public GameObject activeBar = null;
 
     void Awake()
     {
-      lowerLimit.transform.localPosition -= new Vector3(length / 2.0f, 0.0f, 0.0f);
-      upperLimit.transform.localPosition += new Vector3(length / 2.0f, 0.0f, 0.0f);
-      float section_size = length / sections;
-      for (float x = lowerLimit.transform.localPosition.x + section_size / 2.0f; x < upperLimit.transform.localPosition.x; x += section_size)
+      if (sliderHandle == null || lowerLimit == null || upperLimit == null || inactiveBar == null || activeBar == null)
       {
-        Vector3 position = new Vector3(x, 0.0f, 0.0f);
-        GameObject section = Instantiate(sliderSection, Vector3.zero, Quaternion.identity) as GameObject;
-        section.transform.parent = transform;
-        section.transform.localPosition = position;
-        section.transform.localRotation = Quaternion.identity;
-        section.transform.localScale = new Vector3(section_size, 0.1f, 0.1f);
+        Debug.LogWarning("Slider is not initialized properly");
+        return;
       }
-      sliderSection.SetActive(false);
-    }
 
-    // Use this for initialization
-    void Start()
-    {
-
+      inactiveBar.transform.localPosition = (upperLimit.transform.localPosition + lowerLimit.transform.localPosition) / 2.0f;
+      Vector3 inactiveBarScale = inactiveBar.transform.localScale;
+      inactiveBarScale.x = Mathf.Abs(upperLimit.transform.localPosition.x - lowerLimit.transform.localPosition.x);
+      inactiveBar.transform.localScale = inactiveBarScale;
     }
 
     // Update is called once per frame
     void Update()
     {
+      
+    }
 
+    void LateUpdate()
+    {
+      activeBar.transform.localPosition = (sliderHandle.transform.localPosition + lowerLimit.transform.localPosition) / 2.0f;
+      Vector3 activeBarScale = activeBar.transform.localScale;
+      activeBarScale.x = Mathf.Abs(sliderHandle.transform.localPosition.x - lowerLimit.transform.localPosition.x);
+      activeBar.transform.localScale = activeBarScale;
     }
   }
 }

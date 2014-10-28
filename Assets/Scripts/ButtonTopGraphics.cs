@@ -10,6 +10,15 @@ namespace VRWidgets
 
     private Button button_ = null;
 
+    public void SetBloomGain(float gain)
+    {
+      Renderer[] renderers = GetComponentsInChildren<Renderer>();
+      foreach (Renderer renderer in renderers)
+      {
+        renderer.material.SetFloat("_Gain", gain);
+      }
+    }
+
     public void SetStatus(bool status)
     {
       if (status)
@@ -34,6 +43,7 @@ namespace VRWidgets
       {
         Debug.LogWarning("Button Switch configured incorrectedly");
       }
+      SetStatus(false);
     }
 
     void LateUpdate()

@@ -6,10 +6,18 @@ public class SliderHandleButton : Button
 {
   public HandDetector handDetector;
 
+  private SliderHandle slider_handle_ = null;
   private bool is_pressed_ = false;
+  private Vector3 target_origin_position_ = Vector3.zero;
+
   public override void ButtonPressed()
   {
     is_pressed_ = true;
+    if (handDetector.target)
+    {
+      target_origin_position_ = handDetector.target.transform.position;
+      slider_handle_.SetReferencePosition();
+    }
     Debug.Log("PRESSED");
   }
 
@@ -20,16 +28,20 @@ public class SliderHandleButton : Button
     Debug.Log("RELEASED");
   }
 
+  void Awake()
+  {
+    slider_handle_ = transform.parent.GetComponent<SliderHandle>();
+  }
+
   public override void Update()
   {
     base.Update();
     if (is_pressed_)
     {
-      if (handDetector.target_)
+      if (handDetector.target)
       {
-        Vector3 target = new Vector3(handDetector.target_.transform.position.x, transform.parent.position.y, transform.parent.position.z);
-        transform.parent.position = Vector3.Lerp(transform.parent.position, target, 0.5f);
-        buttonCasing.SetSpringAnchor(transform.parent.position);
+        slider_handle_.UpdatePosition(handDetector.target.transform.position - target_origin_position_);
+        buttonCasing.SetSpringAnchor(slider_handle_.transform.position);
       }
     }
   }
