@@ -5,6 +5,8 @@ using VRWidgets;
 public class SliderHandleButton : Button
 {
   public HandDetector handDetector;
+  public ButtonTopGraphics buttonTopGraphics;
+  public ButtonBotGraphics buttonBotGraphics;
 
   private SliderHandle slider_handle_ = null;
   private bool is_pressed_ = false;
@@ -18,6 +20,9 @@ public class SliderHandleButton : Button
       target_origin_position_ = handDetector.target.transform.position;
       slider_handle_.SetReferencePosition();
     }
+    buttonTopGraphics.SetBloomGain(3.0f);
+    buttonBotGraphics.SetBloomGain(2.0f);
+    buttonBotGraphics.SetColor(new Color(0.0f, 1.0f, 1.0f, 1.0f));
     Debug.Log("PRESSED");
   }
 
@@ -25,12 +30,17 @@ public class SliderHandleButton : Button
   {
     is_pressed_ = false;
     handDetector.ResetTarget();
+    buttonTopGraphics.SetBloomGain(1.5f);
+    buttonBotGraphics.SetBloomGain(1.5f);
+    buttonBotGraphics.SetColor(new Color(0.0f, 0.1f, 0.1f, 1.0f));
+    //buttonBotGraphics.SetColor(new Color(0.067f, 0.067f, 0.067f, 0.5f));
     Debug.Log("RELEASED");
   }
 
   void Awake()
   {
     slider_handle_ = transform.parent.GetComponent<SliderHandle>();
+    ButtonReleased();
   }
 
   public override void Update()

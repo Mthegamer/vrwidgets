@@ -16,6 +16,15 @@ namespace VRWidgets
       }
     }
 
+    public void SetColor(Color color)
+    {
+      Renderer[] renderers = GetComponentsInChildren<Renderer>();
+      foreach (Renderer renderer in renderers)
+      {
+        renderer.material.color = color;
+      }
+    }
+
     void Awake()
     {
       if (transform.parent && transform.parent.GetComponentInChildren<Button>())
