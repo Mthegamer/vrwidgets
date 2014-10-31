@@ -20,8 +20,8 @@ public class SliderHandleButton : Button
       target_origin_position_ = handDetector.target.transform.position;
       slider_handle_.SetReferencePosition();
     }
-    buttonTopGraphics.SetBloomGain(3.0f);
-    buttonBotGraphics.SetBloomGain(2.0f);
+    buttonTopGraphics.SetBloomGain(5.0f);
+    buttonBotGraphics.SetBloomGain(4.0f);
     buttonBotGraphics.SetColor(new Color(0.0f, 1.0f, 1.0f, 1.0f));
     Debug.Log("PRESSED");
   }
@@ -30,8 +30,8 @@ public class SliderHandleButton : Button
   {
     is_pressed_ = false;
     handDetector.ResetTarget();
-    buttonTopGraphics.SetBloomGain(1.5f);
-    buttonBotGraphics.SetBloomGain(1.5f);
+    buttonTopGraphics.SetBloomGain(2.0f);
+    buttonBotGraphics.SetBloomGain(2.0f);
     buttonBotGraphics.SetColor(new Color(0.0f, 0.1f, 0.1f, 1.0f));
     //buttonBotGraphics.SetColor(new Color(0.067f, 0.067f, 0.067f, 0.5f));
     Debug.Log("RELEASED");

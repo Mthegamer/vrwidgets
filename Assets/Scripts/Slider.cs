@@ -29,7 +29,7 @@ namespace VRWidgets
       Renderer[] renderers = activeBar.GetComponentsInChildren<Renderer>();
       foreach (Renderer renderer in renderers)
       {
-        renderer.material.SetFloat("_Gain", 1.5f);
+        renderer.material.SetFloat("_Gain", 3.0f);
       }
     }
   }

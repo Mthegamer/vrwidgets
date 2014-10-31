@@ -36,12 +36,18 @@ namespace VRWidgets
 
     public virtual void TurnsActive()
     {
-      buttonCasing.SetSpringAnchor(buttonToggleActive.transform.position);
     }
 
     public virtual void TurnsInactive()
     {
-      buttonCasing.SetSpringAnchor(buttonToggleInactive.transform.position);
+    }
+
+    public void UpdateButtonProperties()
+    {
+      if (isActive)
+        buttonCasing.SetSpringAnchor(buttonToggleActive.transform.position);
+      else
+        buttonCasing.SetSpringAnchor(buttonToggleInactive.transform.position);
     }
 
     public void ButtonEntersCushion()
@@ -58,16 +64,16 @@ namespace VRWidgets
     {
       if (entered_switch_ && entered_cushion_)
       {
-
         ButtonPressed();
         if (isToggleButton)
         {
-          if (isActive)
-            TurnsInactive();
-          else
-            TurnsActive();
           isActive = !isActive;
+          if (isActive)
+            TurnsActive();
+          else
+            TurnsInactive();
         }
+        UpdateButtonProperties();
         entered_switch_ = false;
         entered_cushion_ = false;
       }

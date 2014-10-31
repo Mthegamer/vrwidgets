@@ -163,9 +163,10 @@ public class OVRManager : MonoBehaviour
 	/// </summary>
 	public static void DismissHSWDisplay()
 	{
-#if !UNITY_ANDROID || UNITY_EDITOR
-		capiHmd.DismissHSWDisplay();
-#endif
+//#if !UNITY_ANDROID || UNITY_EDITOR
+//    capiHmd.DismissHSWDisplay();
+//#endif
+    capiHmd.DismissHSWDisplay();
 	}
 	
 	/// <summary>
@@ -418,7 +419,8 @@ public class OVRManager : MonoBehaviour
 
 		wasPositionTracked = tracker.isPositionTracked;
 		
-		if (isHSWDisplayed && Input.anyKeyDown)
+		//if (isHSWDisplayed && Input.anyKeyDown)
+    if (isHSWDisplayed)
 		{
 			DismissHSWDisplay();
 			

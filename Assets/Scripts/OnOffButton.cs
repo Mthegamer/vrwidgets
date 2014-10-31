@@ -25,7 +25,7 @@ public class OnOffButton : Button
     buttonTopGraphics.SetBloomGain(3.0f);
     buttonMidGraphics.SetBloomGain(10.0f);
     buttonMidGraphics.SetColor(new Color(0.0f, 0.05f, 0.05f, 1.0f));
-    buttonBotGraphics.SetBloomGain(2.0f);
+    buttonBotGraphics.SetBloomGain(2.5f);
     buttonBotGraphics.SetColor(new Color(0.0f, 1.0f, 1.0f, 1.0f));
   }
 

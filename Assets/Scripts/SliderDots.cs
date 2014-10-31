@@ -20,7 +20,7 @@ public class SliderDots : MonoBehaviour {
         foreach (Renderer renderer in renderers)
         {
           renderer.material.color = new Color(0.0f, 1.0f, 1.0f, 1.0f);
-          renderer.material.SetFloat("_Gain", 2.0f);
+          renderer.material.SetFloat("_Gain", 3.0f);
         }
       }
       else
@@ -49,7 +49,7 @@ public class SliderDots : MonoBehaviour {
     for (float x = lowerLimit + increments / 2.0f; x < upperLimit; x += increments) {
       GameObject new_dot = Instantiate(dot) as GameObject;
       new_dot.transform.parent = transform;
-      new_dot.transform.localPosition = new Vector3(x, 0.0f, -0.1f);
+      new_dot.transform.localPosition = new Vector3(x, 1.0f, -0.1f);
       new_dot.transform.localScale = Vector3.one;
       dots.Add(new_dot);
     }
