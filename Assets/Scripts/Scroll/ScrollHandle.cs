@@ -32,6 +32,7 @@ namespace VRWidgets
         this_pivot_ = transform.position;
         content_pivot_ = scrollContent.transform.position;
         target_pivot_ = handDetector.target.transform.position;
+        scrollViewer.SetScrollActive(true);
       }
     }
 
@@ -39,6 +40,7 @@ namespace VRWidgets
     {
       is_pressed_ = false;
       transform.localPosition = Vector3.zero;
+      scrollViewer.SetScrollActive(false);
     }
 
     void Awake()
