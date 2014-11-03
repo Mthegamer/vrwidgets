@@ -2,8 +2,10 @@
 using System.Collections;
 using VRWidgets;
 
-public class ButtonDemo1 : ButtonBase 
+public class ButtonDemoBasic : ButtonBase 
 {
+  public GameObject graphics;
+
   public override void ButtonReleased()
   {
     Debug.Log("Released");
@@ -12,5 +14,11 @@ public class ButtonDemo1 : ButtonBase
   public override void ButtonPressed()
   {
     Debug.Log("Pressed");
+  }
+
+  public override void Update()
+  {
+    base.Update();
+    graphics.transform.localPosition = GetPosition();
   }
 }
