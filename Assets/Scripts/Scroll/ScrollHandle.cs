@@ -13,11 +13,18 @@ namespace VRWidgets
     private Vector3 this_pivot_ = Vector3.zero;
     private Vector3 content_pivot_ = Vector3.zero;
     private Vector3 target_pivot_ = Vector3.zero;
+    private Vector3 prev_content_pos_ = Vector3.zero;
 
     private bool is_pressed_ = false;
 
-    public void UpdatePosition(Vector3 position_difference)
+    private void UpdateMomentum()
     {
+      scrollContent.rigidbody.velocity = (scrollContent.transform.position - prev_content_pos_) * (1 / Time.deltaTime);
+    }
+
+    private void UpdatePosition(Vector3 position_difference)
+    {
+      prev_content_pos_ = scrollContent.transform.position;
       transform.position = position_difference + this_pivot_;
       scrollContent.transform.position = position_difference + content_pivot_;
 
@@ -39,14 +46,13 @@ namespace VRWidgets
     public override void ButtonReleased()
     {
       is_pressed_ = false;
-      transform.localPosition = Vector3.zero;
       scrollViewer.SetScrollActive(false);
+      UpdateMomentum();
+      transform.localPosition = Vector3.zero;
     }
 
     void Awake()
     {
-      ButtonReleased();
-
       Limits viewer_limits = new Limits();
       viewer_limits.GetLimitsToLocal(scrollViewer.scrollBoundaries, gameObject);
 
@@ -54,6 +60,10 @@ namespace VRWidgets
       detector_scale.x = (viewer_limits.r - viewer_limits.l);
       detector_scale.y = (viewer_limits.t - viewer_limits.b);
       handDetector.transform.localScale = detector_scale;
+
+      prev_content_pos_ = scrollContent.transform.position;
+
+      //ButtonReleased();
     }
 
     public override void Update()
