@@ -6,23 +6,22 @@ namespace VRWidgets
   public abstract class SliderHandleButtonBase : ButtonBase
   {
     public HandDetector handDetector;
+    public SliderHandleBase sliderHandle;
 
-    private SliderHandleBase slider_handle_ = null;
+    private Vector3 target_pivot_ = Vector3.zero;
 
     public override void ButtonPressed()
     {
-      slider_handle_.ResetPivot();
+      if (handDetector.target)
+      {
+        sliderHandle.ResetPivot();
+        target_pivot_ = handDetector.target.transform.position;
+      }
     }
 
     public override void ButtonReleased()
     {
       handDetector.ResetTarget();
-    }
-
-    public override void Awake()
-    {
-      base.Awake();
-      slider_handle_ = transform.parent.GetComponent<SliderHandleBase>();      
     }
 
     // Update is called once per frame
@@ -33,7 +32,7 @@ namespace VRWidgets
       {
         if (handDetector.target)
         {
-          slider_handle_.UpdatePosition(handDetector.target.transform.position - handDetector.pivot);
+          sliderHandle.UpdatePosition(handDetector.target.transform.position - target_pivot_);
         }
       }
     }

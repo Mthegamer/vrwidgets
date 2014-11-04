@@ -7,7 +7,7 @@ namespace VRWidgets
   [RequireComponent(typeof(BoxCollider))]
   public abstract class ButtonBase : MonoBehaviour
   {
-    public float spring = 100.0f;
+    public float spring = 50.0f;
     public float triggerDistance = 0.025f;
     public float cushionThickness = 0.005f;
 

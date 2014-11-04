@@ -6,8 +6,6 @@ using VRWidgets;
 public class HandDetector : MonoBehaviour
 {
   [HideInInspector]
-  public Vector3 pivot = Vector3.zero;
-  [HideInInspector]
   public GameObject target = null;
 
   private bool IsHand(Collider other)
@@ -28,7 +26,6 @@ public class HandDetector : MonoBehaviour
     if (IsHand(other))
     {
       target = other.gameObject;
-      pivot = other.transform.position;
     }
   }
 

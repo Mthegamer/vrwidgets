@@ -33,4 +33,10 @@ public class SliderDemoHandleButton : SliderHandleButtonBase
     base.ButtonReleased();
     ReleasedGraphics();
   }
+
+  public override void Awake()
+  {
+    base.Awake();
+    ReleasedGraphics();
+  }
 }
