@@ -8,6 +8,18 @@ public class SliderDemoHandleButton : SliderHandleButtonBase
   public SliderDemoGraphics midLayer;
   public SliderDemoGraphics botLayer;
 
+  public override void ButtonPressed()
+  {
+    base.ButtonPressed();
+    PressedGraphics();
+  }
+
+  public override void ButtonReleased()
+  {
+    base.ButtonReleased();
+    ReleasedGraphics();
+  }
+
   private void PressedGraphics()
   {
     topLayer.SetBloomGain(5.0f);
@@ -22,21 +34,25 @@ public class SliderDemoHandleButton : SliderHandleButtonBase
     botLayer.SetColor(new Color(0.067f, 0.067f, 0.067f, 0.5f));
   }
 
-  public override void ButtonPressed()
+  private void UpdateGraphics()
   {
-    base.ButtonPressed();
-    PressedGraphics();
-  }
+    Vector3 position = GetPosition();
+    position.z -= (triggerDistance + 0.01f);
 
-  public override void ButtonReleased()
-  {
-    base.ButtonReleased();
-    ReleasedGraphics();
+    topLayer.transform.localPosition = position - new Vector3(0.0f, 0.0f, 0.01f + 0.25f * (1 - GetPercent()));
+    botLayer.transform.localPosition = position;
+    midLayer.transform.localPosition = (topLayer.transform.localPosition + botLayer.transform.localPosition) / 2.0f;
   }
 
   public override void Awake()
   {
     base.Awake();
     ReleasedGraphics();
+  }
+
+  public override void Update()
+  {
+    base.Update();
+    UpdateGraphics();
   }
 }

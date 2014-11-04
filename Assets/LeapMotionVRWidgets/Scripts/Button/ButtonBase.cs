@@ -19,13 +19,18 @@ namespace VRWidgets
     public abstract void ButtonReleased();
     public abstract void ButtonPressed();
 
+    public float GetPercent()
+    {
+      return Mathf.Clamp(transform.localPosition.z / triggerDistance, 0.0f, 1.0f);
+    }
+
     public Vector3 GetPosition()
     {
       if (triggerDistance == 0.0f)
         return Vector3.zero;
 
       Vector3 position = transform.localPosition;
-      position.z = resting_position_.z + Mathf.Clamp(position.z / triggerDistance, 0.0f, 1.0f) * triggerDistance;
+      position.z = resting_position_.z + GetPercent() * triggerDistance;
       return position;
     }
 
