@@ -54,7 +54,7 @@ namespace VRWidgets
     void Awake()
     {
       Limits viewer_limits = new Limits();
-      viewer_limits.GetLimitsToLocal(scrollViewer.scrollBoundaries, gameObject);
+      viewer_limits.GetLimits(scrollViewer.scrollBoundaries);
 
       Vector3 detector_scale = handDetector.transform.localScale;
       detector_scale.x = (viewer_limits.r - viewer_limits.l);
@@ -62,8 +62,6 @@ namespace VRWidgets
       handDetector.transform.localScale = detector_scale;
 
       prev_content_pos_ = scrollContent.transform.position;
-
-      //ButtonReleased();
     }
 
     public override void Update()

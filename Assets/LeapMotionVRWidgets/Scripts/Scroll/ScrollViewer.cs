@@ -27,7 +27,7 @@ namespace VRWidgets
     // Use this for initialization
     void Start()
     {
-      boundaries_.GetLimitsToLocal(scrollBoundaries, gameObject);
+      boundaries_.GetLimits(scrollBoundaries);
       scrollWindow.transform.localPosition = new Vector3((boundaries_.r + boundaries_.l) / 2.0f, (boundaries_.t + boundaries_.b) / 2.0f, 0.0f);
       scrollWindow.transform.localScale = new Vector3((boundaries_.r - boundaries_.l), (boundaries_.t - boundaries_.b), 0.0f);
       scrollCursor.SetLimits(boundaries_.t, boundaries_.b);
