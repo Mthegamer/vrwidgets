@@ -8,7 +8,6 @@ namespace VRWidgets
     public HandDetector handDetector;
 
     private SliderHandleBase slider_handle_ = null;
-    private Vector3 target_resting_position_ = Vector3.zero;
 
     public override void ButtonPressed()
     {
