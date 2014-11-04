@@ -7,14 +7,14 @@ namespace VRWidgets
   [RequireComponent(typeof(BoxCollider))]
   public abstract class ButtonBase : MonoBehaviour
   {
-    public float spring = 0.0f;
-    public float triggerDistance = 0.0f;
-    public float cushionThickness = 0.0f;
+    public float spring = 100.0f;
+    public float triggerDistance = 0.025f;
+    public float cushionThickness = 0.005f;
 
     protected Vector3 resting_position_;
-
-    private bool is_pressed_;
-    private float constraint_distance_;
+    protected bool is_pressed_;
+    protected float min_distance_;
+    protected float max_distance_;
 
     public abstract void ButtonReleased();
     public abstract void ButtonPressed();
@@ -29,9 +29,14 @@ namespace VRWidgets
       return position;
     }
 
-    protected void SetConstraintDistance(float distance)
+    protected void SetMinDistance(float distance)
     {
-      constraint_distance_ = distance;
+      min_distance_ = distance;
+    }
+
+    protected void SetMaxDistance(float distance)
+    {
+      max_distance_ = distance;
     }
 
     protected virtual void ConstraintMovement()
@@ -39,7 +44,7 @@ namespace VRWidgets
       Vector3 local_position = transform.localPosition;
       local_position.x = resting_position_.x;
       local_position.y = resting_position_.y;
-      local_position.z = Mathf.Max(constraint_distance_, local_position.z);
+      local_position.z = Mathf.Clamp(local_position.z, min_distance_, max_distance_);
       transform.localPosition = local_position;
     }
 
@@ -73,7 +78,8 @@ namespace VRWidgets
       is_pressed_ = false;
       resting_position_ = transform.localPosition;
       cushionThickness = Mathf.Clamp(cushionThickness, 0.0f, triggerDistance - 0.001f);
-      constraint_distance_ = 0.0f;
+      min_distance_ = 0.0f;
+      max_distance_ = float.MaxValue;
     }
 
     public virtual void Update()

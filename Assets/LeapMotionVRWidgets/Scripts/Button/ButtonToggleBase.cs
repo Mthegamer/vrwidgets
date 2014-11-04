@@ -22,13 +22,13 @@ namespace VRWidgets
       if (toggle_state_ == false)
       {
         ButtonTurnsOn();
-        SetConstraintDistance(onDistance);
+        SetMinDistance(onDistance);
         toggle_state_ = true;
       } 
       else
       {
         ButtonTurnsOff();
-        SetConstraintDistance(offDistance);
+        SetMinDistance(offDistance);
         toggle_state_ = false;
       }
     }
