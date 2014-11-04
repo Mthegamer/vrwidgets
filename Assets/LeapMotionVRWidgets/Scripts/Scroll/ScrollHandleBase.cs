@@ -25,6 +25,11 @@ namespace VRWidgets
       prev_content_pos_ = content.transform.position;
       transform.position = displacement + this_pivot_;
       content.transform.position = displacement + content_pivot_;
+
+      Vector3 local_position = transform.localPosition;
+      local_position.x = 0.0f;
+      local_position.z = Mathf.Max(local_position.z, 0.0f);
+      transform.localPosition = local_position;
     }
 
     public override void ButtonPressed()

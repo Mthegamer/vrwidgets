@@ -44,7 +44,6 @@ namespace VRWidgets
       local_position.x = 0.0f;
       local_position.y = (local_position.y > upper_limit_) ? upper_limit_ : local_position.y;
       local_position.y = (local_position.y < lower_limit_) ? lower_limit_ : local_position.y;
-      local_position.z = 0.0f;
       transform.localPosition = local_position;
     }
 

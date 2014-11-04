@@ -48,19 +48,22 @@ public class ScrollDemoViewer : ScrollViewerBase
     if (cursor != null)
     {
       Vector3 local_position = cursor.transform.localPosition;
-      local_position.y = (boundaries_.t - boundaries_.b) * percent + boundaries_.b;
+      local_position.y = Mathf.Clamp((boundaries_.t - boundaries_.b) * percent + boundaries_.b, boundaries_.b, boundaries_.t);
       cursor.transform.localPosition = local_position;
     }
 
     SetRenderers(incIndicator, false);
     SetRenderers(decIndicator, false);
-    if (percent > previous_percent_ && incIndicator != null)
+    if (Mathf.Abs(percent - previous_percent_) * 1 / (Time.deltaTime) > 0.1f)
     {
-      SetRenderers(incIndicator, true);
-    }
-    else if (percent < previous_percent_ && decIndicator != null)
-    {
-      SetRenderers(decIndicator, true);
+      if (percent > previous_percent_ && incIndicator != null)
+      {
+        SetRenderers(incIndicator, true);
+      }
+      else if (percent < previous_percent_ && decIndicator != null)
+      {
+        SetRenderers(decIndicator, true);
+      }
     }
 
     previous_percent_ = percent;
