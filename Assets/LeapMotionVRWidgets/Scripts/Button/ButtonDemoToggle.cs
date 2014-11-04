@@ -12,13 +12,11 @@ public class ButtonDemoToggle : ButtonToggleBase
   public override void ButtonTurnsOn()
   {
     TurnsOnGraphics();
-    Debug.Log("On");
   }
 
   public override void ButtonTurnsOff()
   {
     TurnsOffGraphics();
-    Debug.Log("Off");
   }
 
   private void TurnsOnGraphics()

@@ -55,7 +55,7 @@ namespace VRWidgets
 
     protected void ApplySpring()
     {
-      rigidbody.AddForce(-spring * (transform.localPosition - resting_position_));
+      rigidbody.AddRelativeForce(-spring * (transform.localPosition - resting_position_));
     }
 
     protected void CheckTrigger()
