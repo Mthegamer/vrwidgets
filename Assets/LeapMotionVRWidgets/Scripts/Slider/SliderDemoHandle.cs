@@ -59,7 +59,7 @@ public class SliderDemoHandle : SliderHandleBase
         Renderer[] renderers = dots[i].GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in renderers)
         {
-          renderer.material.color = new Color(0.067f, 0.067f, 0.067f, 0.5f);
+          renderer.material.color = new Color(0.0f, 0.25f, 0.25f, 0.5f);
           renderer.material.SetFloat("_Gain", 1.0f);
         }
       }

@@ -31,7 +31,7 @@ public class SliderDemoHandleButton : SliderHandleButtonBase
   {
     topLayer.SetBloomGain(2.0f);
     botLayer.SetBloomGain(2.0f);
-    botLayer.SetColor(new Color(0.067f, 0.067f, 0.067f, 0.5f));
+    botLayer.SetColor(new Color(0.0f, 0.25f, 0.25f, 0.5f));
   }
 
   private void UpdateGraphics()

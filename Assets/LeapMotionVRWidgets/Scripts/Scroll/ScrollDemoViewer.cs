@@ -2,6 +2,10 @@
 using System.Collections;
 using VRWidgets;
 
+public class ExponentialMovingAverage {
+
+}
+
 public class ScrollDemoViewer : ScrollViewerBase
 {
   public ScrollContentBase content;
@@ -9,6 +13,8 @@ public class ScrollDemoViewer : ScrollViewerBase
   public GameObject cursor = null;
   public GameObject incIndicator = null;
   public GameObject decIndicator = null;
+
+  protected Limits cursor_boundaries_ = new Limits();
 
   private float previous_percent_ = -1.0f;
 
@@ -21,40 +27,57 @@ public class ScrollDemoViewer : ScrollViewerBase
     }
   }
 
-  public void SetBloomGain(float gain)
+  public void SetBloomGain(GameObject game_object, float gain)
   {
-    Renderer[] renderers = GetComponentsInChildren<Renderer>();
+    Renderer[] renderers = game_object.GetComponentsInChildren<Renderer>();
     foreach (Renderer renderer in renderers)
     {
       renderer.material.SetFloat("_Gain", gain);
     }
   }
 
+  public void SetColor(GameObject game_object, Color color)
+  {
+    Renderer[] renderers = game_object.GetComponentsInChildren<Renderer>();
+    foreach (Renderer renderer in renderers)
+    {
+      renderer.material.color = color;
+    }
+  }
+
   public override void ScrollActive()
   {
-    SetBloomGain(10.0f);
+    SetBloomGain(scrollWindowGraphics, 7.0f);
+    SetBloomGain(cursor, 10.0f);
   }
 
   public override void ScrollInactive()
   {
-    SetBloomGain(5.0f);
+    SetBloomGain(scrollWindowGraphics, 5.0f);
+    SetBloomGain(cursor, 5.0f);
   }
   
-  public void UpdatePercent(float percent)
+  public void UpdateCursors(float percent)
   {
+    percent = Mathf.Clamp(percent, 0.0f, 1.0f);
+
     if (previous_percent_ < 0.0f)
       previous_percent_ = percent;
+
+    float cursor_height = cursor_boundaries_.t - cursor_boundaries_.b;
+    float upper_limit = boundaries_.t - cursor_height / 2.0f;
+    float lower_limit = boundaries_.b + cursor_height / 2.0f;
 
     if (cursor != null)
     {
       Vector3 local_position = cursor.transform.localPosition;
-      local_position.y = Mathf.Clamp((boundaries_.t - boundaries_.b) * percent + boundaries_.b, boundaries_.b, boundaries_.t);
+      local_position.y = (upper_limit - lower_limit) * percent + lower_limit;
       cursor.transform.localPosition = local_position;
     }
 
     SetRenderers(incIndicator, false);
     SetRenderers(decIndicator, false);
-    if (Mathf.Abs(percent - previous_percent_) * 1 / (Time.deltaTime) > 0.1f)
+    if (Mathf.Abs(percent - previous_percent_) * 1 / (Time.deltaTime) > 0.05f)
     {
       if (percent > previous_percent_ && incIndicator != null)
       {
@@ -69,8 +92,16 @@ public class ScrollDemoViewer : ScrollViewerBase
     previous_percent_ = percent;
   }
 
+  public override void Awake()
+  {
+    base.Awake();
+    cursor_boundaries_.GetLimits(cursor);
+    SetBloomGain(incIndicator, 1.0f);
+    SetBloomGain(decIndicator, 1.0f);
+  }
+
   void LateUpdate()
   {
-    UpdatePercent(content.GetPercent());
+    UpdateCursors(content.GetPercent());
   }
 }

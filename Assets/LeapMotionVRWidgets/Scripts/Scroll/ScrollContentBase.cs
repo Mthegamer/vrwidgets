@@ -13,7 +13,7 @@ namespace VRWidgets
 
     public float GetPercent()
     {
-      return (upper_limit_ != lower_limit_) ? (transform.localPosition.y - lower_limit_) / (upper_limit_ - lower_limit_) : 0.0f;
+      return (upper_limit_ != lower_limit_) ? (upper_limit_ - transform.localPosition.y) / (upper_limit_ - lower_limit_) : 0.0f;
     }
 
     public virtual void Awake()

@@ -36,7 +36,7 @@ public class ButtonDemoToggle : ButtonToggleBase
     offGraphics.SetActive(true);
     offGraphics.SetBloomGain(1.0f);
     midGraphics.SetBloomGain(1.0f);
-    midGraphics.SetColor(new Color(0.067f, 0.067f, 0.067f, 0.25f));
+    midGraphics.SetColor(new Color(0.0f, 0.05f, 0.05f, 0.25f));
     botGraphics.SetBloomGain(1.0f);
     botGraphics.SetColor(new Color(0.0f, 0.1f, 0.1f, 1.0f));
   }
