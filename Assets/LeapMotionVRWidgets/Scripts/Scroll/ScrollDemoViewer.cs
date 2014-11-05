@@ -2,8 +2,25 @@
 using System.Collections;
 using VRWidgets;
 
-public class ExponentialMovingAverage {
+public class ExponentialSmoothing {
+  float alpha;
+  float value = float.MinValue;
 
+  public ExponentialSmoothing(float alpha)
+  {
+    this.alpha = alpha;
+  }
+
+  public float Calculate(float value) 
+  {
+    this.value = (this.value == float.MinValue) ? value : alpha * value + (1 - alpha) * this.value;
+    return this.value;
+  }
+
+  public float Value()
+  {
+    return this.value;
+  }
 }
 
 public class ScrollDemoViewer : ScrollViewerBase
@@ -16,6 +33,7 @@ public class ScrollDemoViewer : ScrollViewerBase
 
   protected Limits cursor_boundaries_ = new Limits();
 
+  private ExponentialSmoothing velocity_ = new ExponentialSmoothing(0.5f);
   private float previous_percent_ = -1.0f;
 
   private void SetRenderers(GameObject game_object, bool enabled)
@@ -62,34 +80,40 @@ public class ScrollDemoViewer : ScrollViewerBase
     percent = Mathf.Clamp(percent, 0.0f, 1.0f);
 
     if (previous_percent_ < 0.0f)
+    {
       previous_percent_ = percent;
-
-    float cursor_height = cursor_boundaries_.t - cursor_boundaries_.b;
-    float upper_limit = boundaries_.t - cursor_height / 2.0f;
-    float lower_limit = boundaries_.b + cursor_height / 2.0f;
-
-    if (cursor != null)
-    {
-      Vector3 local_position = cursor.transform.localPosition;
-      local_position.y = (upper_limit - lower_limit) * percent + lower_limit;
-      cursor.transform.localPosition = local_position;
     }
-
-    SetRenderers(incIndicator, false);
-    SetRenderers(decIndicator, false);
-    if (Mathf.Abs(percent - previous_percent_) * 1 / (Time.deltaTime) > 0.05f)
+    else
     {
-      if (percent > previous_percent_ && incIndicator != null)
-      {
-        SetRenderers(incIndicator, true);
-      }
-      else if (percent < previous_percent_ && decIndicator != null)
-      {
-        SetRenderers(decIndicator, true);
-      }
-    }
+      velocity_.Calculate(percent - previous_percent_);
+      float cursor_height = cursor_boundaries_.t - cursor_boundaries_.b;
+      float upper_limit = boundaries_.t - cursor_height / 2.0f;
+      float lower_limit = boundaries_.b + cursor_height / 2.0f;
 
-    previous_percent_ = percent;
+      if (cursor != null)
+      {
+        Vector3 local_position = cursor.transform.localPosition;
+        local_position.y = (upper_limit - lower_limit) * percent + lower_limit;
+        cursor.transform.localPosition = local_position;
+      }
+
+      SetRenderers(incIndicator, false);
+      SetRenderers(decIndicator, false);
+      float velocity = velocity_.Value() / Time.deltaTime;
+      if (Mathf.Abs(velocity) > 0.01f)
+      {
+        if (velocity > 0.0f && incIndicator != null)
+        {
+          SetRenderers(incIndicator, true);
+        }
+        else if (velocity < 0.0f && decIndicator != null)
+        {
+          SetRenderers(decIndicator, true);
+        }
+      }
+
+      previous_percent_ = percent;
+    }
   }
 
   public override void Awake()
