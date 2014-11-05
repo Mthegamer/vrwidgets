@@ -99,18 +99,18 @@ public class ScrollDemoViewer : ScrollViewerBase
 
       SetRenderers(incIndicator, false);
       SetRenderers(decIndicator, false);
-      float velocity = velocity_.Value() / Time.deltaTime;
-      if (Mathf.Abs(velocity) > 0.01f)
-      {
-        if (velocity > 0.0f && incIndicator != null)
-        {
-          SetRenderers(incIndicator, true);
-        }
-        else if (velocity < 0.0f && decIndicator != null)
-        {
-          SetRenderers(decIndicator, true);
-        }
-      }
+      //float velocity = velocity_.Value() / Time.deltaTime;
+      //if (Mathf.Abs(velocity) > 0.01f)
+      //{
+      //  if (velocity > 0.0f && incIndicator != null)
+      //  {
+      //    SetRenderers(incIndicator, true);
+      //  }
+      //  else if (velocity < 0.0f && decIndicator != null)
+      //  {
+      //    SetRenderers(decIndicator, true);
+      //  }
+      //}
 
       previous_percent_ = percent;
     }
