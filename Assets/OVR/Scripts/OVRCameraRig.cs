@@ -100,9 +100,11 @@ public class OVRCameraRig : MonoBehaviour
 		centerEyeAnchor.localRotation = leftEye.orientation; // using left eye for now
 		rightEyeAnchor.localRotation = rightEye.orientation;
 
-		leftEyeAnchor.localPosition = leftEye.position;
-		centerEyeAnchor.localPosition = 0.5f * (leftEye.position + rightEye.position);
-		rightEyeAnchor.localPosition = rightEye.position;
+    Vector3 difference = 0.5f * (leftEye.position + rightEye.position);
+
+    leftEyeAnchor.localPosition = leftEye.position - difference;
+		rightEyeAnchor.localPosition = rightEye.position - difference;
+    centerEyeAnchor.localPosition = 0.5f * (leftEyeAnchor.localPosition + rightEyeAnchor.localPosition);
 	}
 
 	private void UpdateCameras()
