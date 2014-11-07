@@ -10,6 +10,9 @@ namespace VRWidgets
 
     private Vector3 target_pivot_ = Vector3.zero;
 
+    public abstract void HandlePressed();
+    public abstract void HandleReleased();
+
     public override void ButtonPressed()
     {
       if (handDetector.target)
@@ -17,11 +20,13 @@ namespace VRWidgets
         sliderHandle.ResetPivot();
         target_pivot_ = handDetector.target.transform.position;
       }
+      HandlePressed();
     }
 
     public override void ButtonReleased()
     {
       handDetector.ResetTarget();
+      HandleReleased();
     }
 
     // Update is called once per frame

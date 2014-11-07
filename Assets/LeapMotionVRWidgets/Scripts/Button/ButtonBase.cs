@@ -3,8 +3,8 @@ using System.Collections;
 
 namespace VRWidgets
 {
-  [RequireComponent(typeof(Rigidbody))]
   [RequireComponent(typeof(BoxCollider))]
+  [RequireComponent(typeof(Rigidbody))]
   public abstract class ButtonBase : MonoBehaviour
   {
     public float spring = 50.0f;

@@ -8,15 +8,13 @@ public class SliderDemoHandleButton : SliderHandleButtonBase
   public SliderDemoGraphics midLayer;
   public SliderDemoGraphics botLayer;
 
-  public override void ButtonPressed()
+  public override void HandlePressed()
   {
-    base.ButtonPressed();
     PressedGraphics();
   }
 
-  public override void ButtonReleased()
+  public override void HandleReleased()
   {
-    base.ButtonReleased();
     ReleasedGraphics();
   }
 
