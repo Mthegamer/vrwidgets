@@ -44,7 +44,7 @@ namespace VRWidgets
       max_distance_ = distance;
     }
 
-    protected virtual void ConstraintMovement()
+    protected virtual void ApplyConstraints()
     {
       Vector3 local_position = transform.localPosition;
       local_position.x = resting_position_.x;
@@ -89,7 +89,7 @@ namespace VRWidgets
 
     public virtual void Update()
     {
-      ConstraintMovement();
+      ApplyConstraints();
       ApplySpring();
       CheckTrigger();
     }
