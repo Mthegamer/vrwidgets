@@ -65,13 +65,13 @@ public class ScrollDemoViewer : ScrollViewerBase
 
   public override void ScrollActive()
   {
-    SetBloomGain(scrollWindowGraphics, 7.0f);
+    SetBloomGain(scrollWindowFrame, 7.0f);
     SetBloomGain(cursor, 10.0f);
   }
 
   public override void ScrollInactive()
   {
-    SetBloomGain(scrollWindowGraphics, 5.0f);
+    SetBloomGain(scrollWindowFrame, 5.0f);
     SetBloomGain(cursor, 5.0f);
   }
   
@@ -99,18 +99,6 @@ public class ScrollDemoViewer : ScrollViewerBase
 
       SetRenderers(incIndicator, false);
       SetRenderers(decIndicator, false);
-      //float velocity = velocity_.Value() / Time.deltaTime;
-      //if (Mathf.Abs(velocity) > 0.01f)
-      //{
-      //  if (velocity > 0.0f && incIndicator != null)
-      //  {
-      //    SetRenderers(incIndicator, true);
-      //  }
-      //  else if (velocity < 0.0f && decIndicator != null)
-      //  {
-      //    SetRenderers(decIndicator, true);
-      //  }
-      //}
 
       previous_percent_ = percent;
     }

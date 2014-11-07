@@ -6,7 +6,7 @@ namespace VRWidgets
   public abstract class ScrollViewerBase : MonoBehaviour
   {
     public GameObject scrollWindow;
-    public GameObject scrollWindowGraphics;
+    public GameObject scrollWindowFrame;
 
     protected Limits boundaries_ = new Limits();
 
@@ -21,9 +21,9 @@ namespace VRWidgets
     // Use this for initialization
     public virtual void Awake()
     {
-      if (scrollWindowGraphics != null)
+      if (scrollWindowFrame != null)
       {
-        boundaries_.GetLimits(scrollWindowGraphics);
+        boundaries_.GetLimits(scrollWindowFrame);
         scrollWindow.transform.localPosition = new Vector3((boundaries_.r + boundaries_.l) / 2.0f, (boundaries_.t + boundaries_.b) / 2.0f, 0.0f);
         scrollWindow.transform.localScale = new Vector3((boundaries_.r - boundaries_.l), (boundaries_.t - boundaries_.b), 0.0f);
       }

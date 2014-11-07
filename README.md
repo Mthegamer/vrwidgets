@@ -45,8 +45,8 @@ SliderHandleBase sliderHandle | Attach the sliderHandle so it knows who to signa
 
 Functions | Definition
 --------- | ----------
-override void SlidePressed()  | Called when handle is pressed
-override void SliderReleased()   | Called when handle is released
+abstract void SlidePressed()  | Called when handle is pressed
+abstract void SliderReleased()   | Called when handle is released
 
 #### SliderHandleBase
 Inspector Values | Definition
