@@ -9,10 +9,10 @@ There are 3 widgets in this package you can use:
 Buttons only require a script that inhereits from ButtonBase.
 You can see the barebone example on the ButtonDemoBasic prefab.
 
-#### Inspector values
+#### Inspector Values
 Values  | Definition
 ------- | ----------
-test    | test
+float string    | test
 
 float string; 
 float triggerDistance;
