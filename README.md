@@ -9,7 +9,7 @@ There are 3 widgets in this package you can use:
 Buttons only require a script that inhereits from ButtonBase.
 Take a look at the ButtonDemoBasic example on how to inhereit ButtonBase.
 
-### ButtonBase
+#### ButtonBase
 Inspector Values  | Definition
 ------- | ----------
 float string            | Strength of the string (Recommend: 100)
@@ -37,21 +37,25 @@ Sliders also require two additional game objects:
 2. SliderLowerLimit
 These limits determine how far can the slider move to.
 
-### SliderHandleButtonBase - Inherits from ButtonBase
+#### SliderHandleButtonBase - Inherits from ButtonBase
 Inspector Values | Definition
+---------------- | ----------
 HandDetector handDetector     | HandDetector is used to determine which part of the hand should the slider follow
 SliderHandleBase sliderHandle | Attach the sliderHandle so it knows who to signal them to start moving
 
 Functions | Definition
+--------- | ----------
 override void SlidePressed()  | Called when handle is pressed
 override void SliderReleased()   | Called when handle is released
 
-### SliderHandleBase
+#### SliderHandleBase
 Inspector Values | Definition
+---------------- | ----------
 GameObject upperLimit | The position for the upperLimit of the slider. Only localPosition.x will be used
 GameObject lowerLimit | The position for the lowerLimit of the slider. Only localPosition.x will be used
 
 Functions | Definition
+--------- | ----------
 float GetPercent()            | Percent for the slider position betweem lower and upper limit
 virtual void UpdatePosition() | 
 
