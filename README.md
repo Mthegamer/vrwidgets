@@ -12,7 +12,9 @@ You can see the barebone example on the ButtonDemoBasic prefab.
 #### Inspector Values
 Values  | Definition
 ------- | ----------
-float string    | test
+float string            | Strength of the string
+float triggerDistance   | How far does the button need to be pressed to trigger
+float cushionThickness  | A cushion used hysteresis. It's positioned right above the trigger. Keep this number low.
 
 float string; 
 float triggerDistance;
