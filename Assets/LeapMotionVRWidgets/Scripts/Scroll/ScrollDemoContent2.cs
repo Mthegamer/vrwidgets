@@ -134,8 +134,8 @@ public struct HSVColor
 public class ScrollDemoContent2 : ScrollContentBase 
 {
 	// Use this for initialization
-	public override void Awake () {
-    base.Awake();
+	public override void Start () {
+    base.Start();
     Renderer[] renderers = GetComponentsInChildren<Renderer>();
     float increment = 1.0f / 16.0f;
     float value = 0.0f;

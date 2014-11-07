@@ -107,7 +107,7 @@ public class ScrollDemoViewer : ScrollViewerBase
   public override void Awake()
   {
     base.Awake();
-    cursor_boundaries_.GetLimits(cursor);
+    cursor_boundaries_.GetLimits(cursor, gameObject);
     SetBloomGain(incIndicator, 1.0f);
     SetBloomGain(decIndicator, 1.0f);
   }

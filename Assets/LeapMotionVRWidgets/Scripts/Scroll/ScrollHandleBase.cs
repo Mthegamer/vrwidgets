@@ -18,6 +18,9 @@ namespace VRWidgets
     private void AddContentMomentum()
     {
       content.rigidbody.velocity = (content.transform.position - prev_content_pos_) * 1 / (Time.deltaTime);
+      //Vector3 local_velocity = transform.InverseTransformDirection((content.transform.position - prev_content_pos_) * 1 / (Time.deltaTime));
+      //local_velocity.z = 0.0f;
+      //content.rigidbody.velocity = transform.TransformDirection(local_velocity);
     }
 
     private void UpdatePosition(Vector3 displacement)
@@ -47,13 +50,16 @@ namespace VRWidgets
     {
       AddContentMomentum();
       transform.localPosition = Vector3.zero;
+      Vector3 content_position = content.transform.localPosition;
+      content_position.z = transform.localPosition.z;
+      content.transform.localPosition = content_position;
       viewer.ScrollInactive();
     }
 
     public virtual void Start()
     {
       Limits viewer_limits = new Limits();
-      viewer_limits.GetLimits(viewer.scrollWindow);
+      viewer_limits.GetLimits(viewer.scrollWindow, gameObject);
 
       Vector3 local_scale = transform.localScale;
       local_scale.x = (viewer_limits.r - viewer_limits.l);

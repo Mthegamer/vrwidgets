@@ -16,14 +16,17 @@ namespace VRWidgets
       return (upper_limit_ != lower_limit_) ? (upper_limit_ - transform.localPosition.y) / (upper_limit_ - lower_limit_) : 0.0f;
     }
 
-    public virtual void Awake()
+    public virtual void Start()
     {
       Limits content_limits = new Limits();
       content_limits.GetLimits(gameObject);
       Limits viewer_limits = new Limits();
-      viewer_limits.GetLimits(scrollViewer.scrollWindow);
+      viewer_limits.GetLimits(scrollViewer.scrollWindow, gameObject);
 
       float viewer_height = viewer_limits.t - viewer_limits.b;
+
+      Debug.Log(scrollViewer.scrollWindow.transform.localScale);
+      Debug.Log(content_limits.t + " " + content_limits.b + " " + viewer_height);
 
       if (content_limits.t - content_limits.b > viewer_height)
       {
@@ -38,19 +41,20 @@ namespace VRWidgets
       }
     }
 
-    private void ConstraintMovement()
+    private void ApplyConstraints()
     {
       Vector3 local_position = transform.localPosition;
       local_position.x = 0.0f;
       local_position.y = (local_position.y > upper_limit_) ? upper_limit_ : local_position.y;
       local_position.y = (local_position.y < lower_limit_) ? lower_limit_ : local_position.y;
+      local_position.z = Mathf.Max(local_position.z, 0.0f);
       transform.localPosition = local_position;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-      ConstraintMovement();
+      ApplyConstraints();
     }
   }
 }

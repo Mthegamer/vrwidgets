@@ -23,13 +23,13 @@ namespace VRWidgets
     {
       if (scrollWindowFrame != null)
       {
-        boundaries_.GetLimits(scrollWindowFrame);
+        boundaries_.GetLimits(scrollWindowFrame, gameObject);
         scrollWindow.transform.localPosition = new Vector3((boundaries_.r + boundaries_.l) / 2.0f, (boundaries_.t + boundaries_.b) / 2.0f, 0.0f);
         scrollWindow.transform.localScale = new Vector3((boundaries_.r - boundaries_.l), (boundaries_.t - boundaries_.b), 0.0f);
       }
       else
       {
-        boundaries_.GetLimits(scrollWindow);
+        boundaries_.GetLimits(scrollWindow, gameObject);
       }
     }
   }
