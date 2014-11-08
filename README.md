@@ -82,7 +82,7 @@ For Viewer:
 ### ScrollHandleBase - Inherits from ButtonBase
 Inspector Values | Definition
 ---------------- | ----------
-HandDetector handDetector | HandDetector is used to determine which part of the hand the window should track.
+HandDetector handDetector | HandDetector is used to determine which part of the hand the scrolling window should track.
 ScrollViewerBase viewer   | Used to match the handle size to viewer size. 
 ScrollContentBase content | Used to move the content as the handle moves.
 
@@ -94,7 +94,7 @@ None | None
 Inspector Values | Definition
 ---------------- | ----------
 GameObject scrollWindow       | A quad responsible for displaying the contents.
-GameObject scrollWindowFrame  | A gameObject which frames the scrollWindow. This can be the same object as the scrollWindow.
+GameObject scrollWindowFrame  | A gameObject which frames the scrollWindow. This can be set to the same object as the scrollWindow.
 
 Functions | Definition
 --------- | ----------
