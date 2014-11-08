@@ -60,30 +60,31 @@ float GetPercent()            | Percentage for the slider position betweem lower
 virtual void UpdatePosition() | Updates the position of the slider and perform constraints on how far it can go
 
 ## Scroll
-Scrolls are more complex to integrate than sliders
-Please follow the ScrollDemoBasic prefab for an example of how to integrate the scrolls.
+Scrolling windows are more complex to integrate than sliders.
+Please follow the ScrollDemoBasic prefab for an example of how to integrate scrolling window.
 
-Scrolls require three scripts with three gameobjects each respectively:
+Each scrolling window requires three scripts and three gameobjects:
 1. ScrollHandle - Responsible for moving the content up/down
-2. ScrollViewer - Responsible for viewing the contents
-3. ScrollContent - Responsible for containing the contents
+2. ScrollViewer - Responsible for displaying the scroll window contents
+3. ScrollContent - Responsible for holding the scroll window contents
 
-The Viewer and Content both use stencil shaders. You can either create your own stencil shader or you can use the stencil shaders provided in this package. This package comes with:
+The ScrollViewer and ScrollContent objects use stencil shaders. You can either create your own stencil shader or you can use the stencil shaders provided with this Unity Package. We provide the following shaders:
 
 For Content:
   * Stencil + Text
   * Stencil + Alpha
   * Stencil + Bloom
   * Stencil + Diffuse
+
 For Viewer:
   * Stencil Window
   
 ### ScrollHandleBase - Inherits from ButtonBase
 Inspector Values | Definition
 ---------------- | ----------
-HandDetector handDetector | HandDetector is used to determine which part of the hand slider should follow.
-ScrollViewerBase viewer   | Used to match the handle size to viewer size
-ScrollContentBase content | Used to move the content as the handle moves
+HandDetector handDetector | HandDetector is used to determine which part of the hand the window should track.
+ScrollViewerBase viewer   | Used to match the handle size to viewer size. 
+ScrollContentBase content | Used to move the content as the handle moves.
 
 Functions | Definition
 --------- | ----------
@@ -92,18 +93,18 @@ None | None
 ### ScrollViewerBase
 Inspector Values | Definition
 ---------------- | ----------
-GameObject scrollWindow       | A quad that's responsible for displaying the contents
-GameObject scrollWindowFrame  | A gameObject that frames the scrollWindow. Can be the same object
+GameObject scrollWindow       | A quad responsible for displaying the contents.
+GameObject scrollWindowFrame  | A gameObject which frames the scrollWindow. This can be the same object as the scrollWindow.
 
 Functions | Definition
 --------- | ----------
-abstract void ScrollActive()    | Gets triggered when the scroll becomes active
-abstract void ScrollInactive()  | Gets triggered when the scroll becomes inactive
+abstract void ScrollActive()    | Gets triggered when the scroll pane becomes active.
+abstract void ScrollInactive()  | Gets triggered when the scroll pane becomes inactive.
 
 ### ScrollContentBase
 Inspector Values | Definition
 ---------------- | ----------
-GameObject scrollViewerBase | Used to determine how far is the content allowed to go while staying in sight
+GameObject scrollViewerBase | Used to determine how far is the content allowed to scroll while remaining visible. 
 
 Functions | Definition
 --------- | ----------
