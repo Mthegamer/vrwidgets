@@ -161,7 +161,8 @@
         texImageX = texImageX * 2.3 - 0.6;
         float texImageY = DecodeFloatRGBA(tex2D(_DistortY, texDist));
         texImageY = texImageY * 2.3 - 0.6;
-        
+        //texImageX *= 4.0; // HACK!!!
+        texImageY *= 2.0; // HACK!!!
         //return colorCorrect(texImageX, texImageY);
         /*
         if (texImageX > 1 || texImageX < 0 || texImageY > 1 || texImageY < 0 ) {

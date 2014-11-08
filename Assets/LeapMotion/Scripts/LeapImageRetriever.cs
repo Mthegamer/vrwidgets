@@ -96,7 +96,7 @@ public class LeapImageRetriever : MonoBehaviour {
 
     // Check main texture dimensions.
     Image image = frame.Images[imageIndex];
-    int image_width = image.Width;
+    int image_width = image.Width * 4;
     int image_height = image.Height;
     //is_dragonfly_ = image_width == DRAGONFLY_IMAGE_WIDTH;
     if (image_width == 0 || image_height == 0) {
@@ -149,8 +149,7 @@ public class LeapImageRetriever : MonoBehaviour {
 
   protected void LoadMainTexture() {
     int num_pixels = main_texture_.width * main_texture_.height;
-    //if (is_dragonfly_)
-    if (false)
+    if (is_dragonfly_)
     {
       int image_index = 0;
       for (int i = 0; i < num_pixels; i += 4)
@@ -163,8 +162,9 @@ public class LeapImageRetriever : MonoBehaviour {
     }
     else
     {
-      for (int i = 0; i < num_pixels; ++i)
+      for (int i = 0; i < num_pixels; ++i) {
         image_pixels_[i].a = image_data_[i];
+      }
     }
   }
 
