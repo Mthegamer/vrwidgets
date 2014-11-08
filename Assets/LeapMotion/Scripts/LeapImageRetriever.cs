@@ -19,6 +19,9 @@ public class LeapImageRetriever : MonoBehaviour {
   public const int DEFAULT_DISTORTION_WIDTH = 64;
   public const int DEFAULT_DISTORTION_HEIGHT = 64;
   public const int IMAGE_WARNING_WAIT = 10;
+  public const int DRAGONFLY_IMAGE_WIDTH = 608;
+  public const int DRAGONFLY_IMAGE_HEIGHT = 540;
+
 
   public int imageIndex = 0;
   public Color imageColor = Color.white;
@@ -27,6 +30,7 @@ public class LeapImageRetriever : MonoBehaviour {
   public bool blackIsTransparent = true;
 
   protected Controller leap_controller_;
+  private bool is_dragonfly_ = false;
 
   // Main texture.
   protected Texture2D main_texture_;
@@ -42,8 +46,12 @@ public class LeapImageRetriever : MonoBehaviour {
   protected float[] distortion_data_;
 
   protected void SetMainTextureDimensions(int width, int height) {
+    if (is_dragonfly_)
+      main_texture_ = new Texture2D(width, height, TextureFormat.RGBA32, false);
+    else
+      main_texture_ = new Texture2D(width, height, TextureFormat.Alpha8, false);
+
     int num_pixels = width * height;
-    main_texture_ = new Texture2D(width, height, TextureFormat.Alpha8, false);
     main_texture_.wrapMode = TextureWrapMode.Clamp;
     image_pixels_ = new Color32[num_pixels];
   }
@@ -90,13 +98,20 @@ public class LeapImageRetriever : MonoBehaviour {
     Image image = frame.Images[imageIndex];
     int image_width = image.Width;
     int image_height = image.Height;
+    is_dragonfly_ = image_width == DRAGONFLY_IMAGE_WIDTH;
+    if (is_dragonfly_)
+    {
+      gammaCorrection = Mathf.Max(gammaCorrection, 1.7f);
+    }
     if (image_width == 0 || image_height == 0) {
       Debug.LogWarning("No data in the image texture.");
       return;
     }
 
     if (image_width != main_texture_.width || image_height != main_texture_.height)
+    {
       SetMainTextureDimensions(image_width, image_height);
+    }
 
     // Check distortion texture dimensions.
     // Divide by two 2 because there are floats per pixel.
@@ -121,6 +136,7 @@ public class LeapImageRetriever : MonoBehaviour {
 
     renderer.material.mainTexture = main_texture_;
     renderer.material.SetColor("_Color", imageColor);
+    renderer.material.SetInt("_IsDragonfly", is_dragonfly_ ? 1 : 0);
     renderer.material.SetFloat("_GammaCorrection", gammaCorrection);
     renderer.material.SetInt("_BlackIsTransparent", blackIsTransparent ? 1 : 0);
 
@@ -137,8 +153,24 @@ public class LeapImageRetriever : MonoBehaviour {
 
   protected void LoadMainTexture() {
     int num_pixels = main_texture_.width * main_texture_.height;
-    for (int i = 0; i < num_pixels; ++i)
-      image_pixels_[i].a = image_data_[i];
+    if (is_dragonfly_)
+    {
+      int image_index = 0;
+      for (int i = 0; i < 4 * num_pixels;)
+      {
+        image_pixels_[image_index].r = image_data_[i++];
+        image_pixels_[image_index].g = image_data_[i++];
+        image_pixels_[image_index].b = image_data_[i++];
+        image_pixels_[image_index].a = image_data_[i++];
+        image_index++;
+      }
+    }
+    else
+    {
+      for (int i = 0; i < num_pixels; ++i) {
+        image_pixels_[i].a = image_data_[i];
+      }
+    }
   }
 
   // Encodes the float distortion texture as RGBA values to transfer the data to the shader.
@@ -150,10 +182,6 @@ public class LeapImageRetriever : MonoBehaviour {
       float dval = distortion_data_[i];
       // The distortion range is -0.6 to +1.7. Normalize to range [0..1).
       dval = (dval + 0.6f) / 2.3f;
-      if (dval > 1.0f || dval < 0.0f) {
-          Debug.Log("WARNING: got a distortion value outside my encoded range at pixel " +
-                    i + ": " + distortion_data_[i]);
-      }
 
       // Encode the float as RGBA.
       float enc_x = dval;
