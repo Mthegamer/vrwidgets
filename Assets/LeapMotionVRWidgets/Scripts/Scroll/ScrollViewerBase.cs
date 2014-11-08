@@ -13,11 +13,6 @@ namespace VRWidgets
     public abstract void ScrollActive();
     public abstract void ScrollInactive();
 
-    public Limits GetLimits()
-    {
-      return boundaries_;
-    }
-
     // Use this for initialization
     public virtual void Awake()
     {

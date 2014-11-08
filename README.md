@@ -57,6 +57,54 @@ GameObject lowerLimit | The position for the lowerLimit of the slider. Only loca
 Functions | Definition
 --------- | ----------
 float GetPercent()            | Percentage for the slider position betweem lower and upper limit.
-virtual void UpdatePosition() | 
+virtual void UpdatePosition() | Updates the position of the slider and perform constraints on how far it can go
 
-## Scrollers
+## Scroll
+Scrolls are more complex to integrate than sliders
+Please follow the ScrollDemoBasic prefab for an example of how to integrate the scrolls.
+
+Scrolls require three scripts with three gameobjects each respectively:
+1. ScrollHandle - Responsible for moving the content up/down
+2. ScrollViewer - Responsible for viewing the contents
+3. ScrollContent - Responsible for containing the contents
+
+The Viewer and Content both use stencil shaders. You can either create your own stencil shader or you can use the stencil shaders provided in this package. This package comes with:
+
+For Content:
+  * Stencil + Text
+  * Stencil + Alpha
+  * Stencil + Bloom
+  * Stencil + Diffuse
+For Viewer:
+  * Stencil Window
+  
+### ScrollHandleBase - Inherits from ButtonBase
+Inspector Values | Definition
+---------------- | ----------
+HandDetector handDetector | HandDetector is used to determine which part of the hand slider should follow.
+ScrollViewerBase viewer   | Used to match the handle size to viewer size
+ScrollContentBase content | Used to move the content as the handle moves
+
+Functions | Definition
+--------- | ----------
+None | None
+
+### ScrollViewerBase
+Inspector Values | Definition
+---------------- | ----------
+GameObject scrollWindow       | A quad that's responsible for displaying the contents
+GameObject scrollWindowFrame  | A gameObject that frames the scrollWindow. Can be the same object
+
+Functions | Definition
+--------- | ----------
+abstract void ScrollActive()    | Gets triggered when the scroll becomes active
+abstract void ScrollInactive()  | Gets triggered when the scroll becomes inactive
+
+### ScrollContentBase
+Inspector Values | Definition
+---------------- | ----------
+GameObject scrollViewerBase | Used to determine how far is the content allowed to go while staying in sight
+
+Functions | Definition
+--------- | ----------
+float GetPercent() | Top = 0%, Bottom = 100%

@@ -25,9 +25,6 @@ namespace VRWidgets
 
       float viewer_height = viewer_limits.t - viewer_limits.b;
 
-      Debug.Log(scrollViewer.scrollWindow.transform.localScale);
-      Debug.Log(content_limits.t + " " + content_limits.b + " " + viewer_height);
-
       if (content_limits.t - content_limits.b > viewer_height)
       {
         float y_offset = (content_limits.t + content_limits.b) / 2.0f - transform.localPosition.y;
