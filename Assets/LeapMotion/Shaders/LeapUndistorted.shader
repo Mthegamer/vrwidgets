@@ -168,17 +168,14 @@
         texImageX = texImageX * 2.3 - 0.6;
         float texImageY = DecodeFloatRGBA(tex2D(_DistortY, texDist));
         texImageY = texImageY * 2.3 - 0.6;
-
         return colorCorrect(texImageX, texImageY);
-        /*
         if (texImageX > 1 || texImageX < 0 || texImageY > 1 || texImageY < 0 ) {
           return float4(0, 0, 0, 0);
         } 
-        else if (_IsDragonfly) {
+        else if (_IsDragonfly > 0) {
           return colorCorrect(texImageX, texImageY);
         }
         else {
-        */
           // Find the undistorted pixel location.
           float2 texCoord = float2(texImageX, texImageY);
           float a = pow(tex2D(_MainTex, texCoord).a, (1.0 / _GammaCorrection));
@@ -193,7 +190,7 @@
             color.a = 1.0;
           }
           return color;
-        //}
+        }
       }
       ENDCG
     }
