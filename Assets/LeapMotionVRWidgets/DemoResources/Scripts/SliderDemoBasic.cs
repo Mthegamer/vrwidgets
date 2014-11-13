@@ -21,7 +21,9 @@ public class SliderDemoBasic : SliderBase
   {
     if (activeBar)
     {
-      activeBar.transform.localPosition = (transform.localPosition + lowerLimit.transform.localPosition) / 2.0f;
+      Vector3 activeBarPosition = activeBar.transform.localPosition;
+      activeBarPosition.x = (transform.localPosition.x + lowerLimit.transform.localPosition.x) / 2.0f;
+      activeBar.transform.localPosition = activeBarPosition;
       Vector3 activeBarScale = activeBar.transform.localScale;
       activeBarScale.x = Mathf.Abs(transform.localPosition.x - lowerLimit.transform.localPosition.x);
       activeBar.transform.localScale = activeBarScale;
