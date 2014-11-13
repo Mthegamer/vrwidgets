@@ -38,6 +38,7 @@ public class SliderDemo : SliderBase
     botLayer.SetColor(new Color(0.0f, 0.25f, 0.25f, 0.5f));
   }
 
+  // Updates the slider handle graphics
   private void UpdateGraphics()
   {
     Vector3 position = GetPosition();
@@ -48,15 +49,14 @@ public class SliderDemo : SliderBase
     midLayer.transform.localPosition = (topLayer.transform.localPosition + botLayer.transform.localPosition) / 2.0f;
   }
 
+  // Updates the active bar behind the handle
   private void UpdateActiveBar()
   {
     Vector3 activeBarPosition = activeBar.transform.localPosition;
     activeBarPosition.x = (transform.localPosition.x + lowerLimit.transform.localPosition.x) / 2.0f;
-    activeBarPosition.x = Mathf.Min(activeBarPosition.x, (upperLimit.transform.localPosition.x + lowerLimit.transform.localPosition.x) / 2.0f);
     activeBar.transform.localPosition = activeBarPosition;
     Vector3 activeBarScale = activeBar.transform.localScale;
     activeBarScale.x = Mathf.Abs(transform.localPosition.x - lowerLimit.transform.localPosition.x);
-    activeBarScale.x = Mathf.Min(activeBarScale.x, upperLimit.transform.localPosition.x - lowerLimit.transform.localPosition.x);
     activeBar.transform.localScale = activeBarScale;
     Renderer[] renderers = activeBar.GetComponentsInChildren<Renderer>();
     foreach (Renderer renderer in renderers)
@@ -82,6 +82,7 @@ public class SliderDemo : SliderBase
     }
   }
 
+  // Updates the dots above the slider
   private void UpdateDots()
   {
     for (int i = 0; i < dots.Count; ++i)
@@ -107,6 +108,7 @@ public class SliderDemo : SliderBase
     }
   }
 
+  // Overrides the UpdatePosition to update the activeBar and dots whenever the position is updated
   public override void UpdatePosition(Vector3 displacement)
   {
     base.UpdatePosition(displacement);
@@ -122,7 +124,10 @@ public class SliderDemo : SliderBase
   public override void Awake()
   {
     base.Awake();
+    // Initiate the graphics for the handle
     ReleasedGraphics();
+
+    // Initiate the dots
     if (numberOfDots > 0)
     {
       float lower_limit = lowerLimit.transform.localPosition.x;
@@ -142,6 +147,8 @@ public class SliderDemo : SliderBase
       Destroy(dot);
       UpdateDots();
     }
+
+    // Initiate the graphics for the active bar
     if (activeBar)
     {
       UpdateActiveBar();
