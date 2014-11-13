@@ -1,4 +1,4 @@
-﻿Shader "LeapMotion/LeapUndistorted" {
+﻿Shader "LeapMotion/LeapIRUndistorted" {
   Properties {
     _Color ("Main Color (A=Opacity)", Color) = (1,1,1,1)
     _MainTex ("Base (A=Opacity)", 2D) = ""
@@ -57,7 +57,8 @@
 
         if (texImageX > 1 || texImageX < 0 || texImageY > 1 || texImageY < 0) {
           return float4(0, 0, 0, 0);
-        } else {
+        } 
+        else {
           // Find the undistorted pixel location.
           float2 texCoord = float2(texImageX, texImageY);
           float a = pow(tex2D(_MainTex, texCoord).a, (1.0 / _GammaCorrection));
@@ -72,7 +73,7 @@
           }
 
           return color;
-        } 
+        }
       }
       ENDCG
     }

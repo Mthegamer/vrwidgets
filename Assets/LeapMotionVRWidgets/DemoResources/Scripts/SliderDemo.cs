@@ -3,19 +3,60 @@ using System.Collections;
 using System.Collections.Generic;
 using VRWidgets;
 
-public class SliderDemoHandle : SliderHandleBase 
+public class SliderDemo : SliderBase 
 {
   public GameObject activeBar = null;
+  public SliderDemoGraphics topLayer = null;
+  public SliderDemoGraphics midLayer = null;
+  public SliderDemoGraphics botLayer = null;
   public GameObject dot = null;
   public int numberOfDots = 0;
 
   private List<GameObject> dots = new List<GameObject>();
 
+  public override void SliderPressed()
+  {
+    PressedGraphics();
+  }
+
+  public override void SliderReleased()
+  {
+    ReleasedGraphics();
+  }
+
+  private void PressedGraphics()
+  {
+    topLayer.SetBloomGain(5.0f);
+    botLayer.SetBloomGain(4.0f);
+    botLayer.SetColor(new Color(0.0f, 1.0f, 1.0f, 1.0f));
+  }
+
+  private void ReleasedGraphics()
+  {
+    topLayer.SetBloomGain(2.0f);
+    botLayer.SetBloomGain(2.0f);
+    botLayer.SetColor(new Color(0.0f, 0.25f, 0.25f, 0.5f));
+  }
+
+  private void UpdateGraphics()
+  {
+    Vector3 position = GetPosition();
+    position.z -= (triggerDistance + 0.01f);
+
+    topLayer.transform.localPosition = position - new Vector3(0.0f, 0.0f, 0.01f + 0.25f * (1 - GetPercent()));
+    botLayer.transform.localPosition = position;
+    midLayer.transform.localPosition = (topLayer.transform.localPosition + botLayer.transform.localPosition) / 2.0f;
+  }
+
   private void UpdateActiveBar()
   {
-    activeBar.transform.localPosition = (transform.localPosition + lowerLimit.transform.localPosition) / 2.0f;
+    Vector3 activeBarPosition = activeBar.transform.localPosition;
+    activeBarPosition.x = (transform.localPosition.x + lowerLimit.transform.localPosition.x) / 2.0f;
+    activeBarPosition.x = Mathf.Min(activeBarPosition.x, (upperLimit.transform.localPosition.x + lowerLimit.transform.localPosition.x) / 2.0f);
+    activeBar.transform.localPosition = activeBarPosition;
     Vector3 activeBarScale = activeBar.transform.localScale;
     activeBarScale.x = Mathf.Abs(transform.localPosition.x - lowerLimit.transform.localPosition.x);
+    activeBarScale.x = Mathf.Min(activeBarScale.x, upperLimit.transform.localPosition.x - lowerLimit.transform.localPosition.x);
     activeBar.transform.localScale = activeBarScale;
     Renderer[] renderers = activeBar.GetComponentsInChildren<Renderer>();
     foreach (Renderer renderer in renderers)
@@ -81,6 +122,7 @@ public class SliderDemoHandle : SliderHandleBase
   public override void Awake()
   {
     base.Awake();
+    ReleasedGraphics();
     if (numberOfDots > 0)
     {
       float lower_limit = lowerLimit.transform.localPosition.x;
@@ -104,5 +146,11 @@ public class SliderDemoHandle : SliderHandleBase
     {
       UpdateActiveBar();
     }
+  }
+
+  public override void Update()
+  {
+    base.Update();
+    UpdateGraphics();
   }
 }

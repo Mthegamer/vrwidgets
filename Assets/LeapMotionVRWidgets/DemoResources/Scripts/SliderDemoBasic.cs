@@ -2,9 +2,20 @@
 using System.Collections;
 using VRWidgets;
 
-public class SliderDemoBasicHandle : SliderHandleBase 
+public class SliderDemoBasic : SliderBase 
 {
+  public GameObject graphics;
   public GameObject activeBar = null;
+
+  public override void SliderPressed()
+  {
+    Debug.Log("HandleReleased");
+  }
+
+  public override void SliderReleased()
+  {
+    Debug.Log("HandlePressed");
+  }
 
   private void UpdateActiveBar()
   {
@@ -23,10 +34,15 @@ public class SliderDemoBasicHandle : SliderHandleBase
     UpdateActiveBar();
   }
 
-
   public override void Awake()
   {
     base.Awake();
     UpdateActiveBar();
   }
+	
+	public override void Update () 
+  {
+    base.Update();
+    graphics.transform.localPosition = GetPosition();
+	}
 }
